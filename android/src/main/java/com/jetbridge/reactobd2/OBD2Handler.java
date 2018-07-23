@@ -67,6 +67,7 @@ public class OBD2Handler implements ObdProgressListener {
 
   private boolean mPreRequisites = true;
   private String mRemoteDeviceName = "";
+  private int mConfig = 0;
   private boolean mMockUpMode = false;
 
   private boolean mIsServiceBound;
@@ -156,7 +157,13 @@ public class OBD2Handler implements ObdProgressListener {
   }
 
   public void setRemoteDeviceName(String aRemoteDeviceName) {
+    Log.e(TAG, "Device Name set " + aRemoteDeviceName);
     mRemoteDeviceName = aRemoteDeviceName;
+  }
+
+  public void setConfig(int config) {
+    Log.e(TAG, "Config set " + config);
+    mConfig = config;
   }
 
   public void setMockUpMode(boolean enabled) {
@@ -174,7 +181,7 @@ public class OBD2Handler implements ObdProgressListener {
 
   private void queueCommands() {
     if (mIsServiceBound) {
-      for (ObdCommand Command : ObdConfig.getCommands()) {
+      for (ObdCommand Command : ObdConfig.getCommands(mConfig)) {
         service.queueJob(new ObdCommandJob(Command));
       }
     }

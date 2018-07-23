@@ -37,6 +37,40 @@ import java.util.ArrayList;
  */
 public final class ObdConfig {
 
+    public static ArrayList<ObdCommand> getCommands(int config) {
+        if(config == 0) {
+            return getVIN();
+        }
+        else if(config == 1) {
+            getCommands();
+        }
+        return getPids();
+    }
+
+    public static ArrayList<ObdCommand> getVIN() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        // Only VIN
+        cmds.add(new VinCommand());
+
+        return cmds;
+    }
+
+    public static ArrayList<ObdCommand> getPids() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        // Control
+        cmds.add(new ModuleVoltageCommand());
+        cmds.add(new EquivalentRatioCommand());
+        cmds.add(new DistanceMILOnCommand());
+        cmds.add(new DtcNumberCommand());
+        cmds.add(new TimingAdvanceCommand());
+        cmds.add(new TroubleCodesCommand());
+        cmds.add(new VinCommand());
+
+        return cmds;
+    }
+
     public static ArrayList<ObdCommand> getCommands() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 

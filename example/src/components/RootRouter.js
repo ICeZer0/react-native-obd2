@@ -11,7 +11,6 @@
 import React, { Component } from 'react';
 
 import {
-  PropTypes,
   StyleSheet,
   Text,
   View,
@@ -39,7 +38,7 @@ import AppEventEmitter from '../services/AppEventEmitter';
 
 const PreferenceDefaultValue = {
   enable_bluetooth_preference: false,
-  enable_mockup_preference: false,
+  enable_mockup_preference: true,
 };
 
 export default class RootRouter extends Component {

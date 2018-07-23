@@ -113,7 +113,7 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
      if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
     }
-
+    Log.e(TAG, "setRemoteDeviceAddress " + remoteDeviceAddress);
     mOBD2Handler.setRemoteDeviceName(remoteDeviceAddress);
   }
 
@@ -122,9 +122,30 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
     if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
     }
-
+    mOBD2Handler.setConfig(1);
     mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLiveData 1");
   }
+
+  @ReactMethod
+  public void startLivePids() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
+    }
+    mOBD2Handler.setConfig(2);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLivePids 2");
+  }
+
+    @ReactMethod
+    public void startLiveVIN() {
+        if (mOBD2Handler == null) {
+            mOBD2Handler = new OBD2Handler(mReactContext);
+        }
+        mOBD2Handler.setConfig(0);
+        mOBD2Handler.startLiveData();
+        Log.e(TAG, "startLiveVIN 0");
+    }
 
   @ReactMethod
   public void stopLiveData() {
