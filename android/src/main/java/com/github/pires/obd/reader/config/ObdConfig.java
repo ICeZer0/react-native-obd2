@@ -1,5 +1,6 @@
 package com.github.pires.obd.reader.config;
 
+import com.github.pires.obd.commands.CustomObdCommand;
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.control.DistanceMILOnCommand;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 /**
  * TODO put description
  */
+
 public final class ObdConfig {
 
     public static ArrayList<ObdCommand> getCommands(int config) {
@@ -42,7 +44,7 @@ public final class ObdConfig {
             return getVIN();
         }
         else if(config == 1) {
-            getCommands();
+            return getCommands();
         }
         return getPids();
     }
@@ -59,14 +61,12 @@ public final class ObdConfig {
     public static ArrayList<ObdCommand> getPids() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
-        // Control
-        cmds.add(new ModuleVoltageCommand());
-        cmds.add(new EquivalentRatioCommand());
-        cmds.add(new DistanceMILOnCommand());
-        cmds.add(new DtcNumberCommand());
-        cmds.add(new TimingAdvanceCommand());
-        cmds.add(new TroubleCodesCommand());
-        cmds.add(new VinCommand());
+        // 128 PIDS + VIN
+        cmds.add(new VinCommand()); // 09 02
+        for(int i = 0; i < 128; i++) {
+            String pid = "01 " + Integer.toHexString(i);
+            cmds.add(new CustomObdCommand(pid));
+        }
 
         return cmds;
     }
@@ -74,19 +74,20 @@ public final class ObdConfig {
     public static ArrayList<ObdCommand> getCommands() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
+
         // Control
-        cmds.add(new ModuleVoltageCommand());
-        cmds.add(new EquivalentRatioCommand());
-        cmds.add(new DistanceMILOnCommand());
-        cmds.add(new DtcNumberCommand());
-        cmds.add(new TimingAdvanceCommand());
-        cmds.add(new TroubleCodesCommand());
-        cmds.add(new VinCommand());
+        cmds.add(new ModuleVoltageCommand()); // 01 42
+        cmds.add(new EquivalentRatioCommand()); //01 44
+        cmds.add(new DistanceMILOnCommand()); //01 21
+        cmds.add(new DtcNumberCommand()); // 01 01
+        cmds.add(new TimingAdvanceCommand()); // 01 0E
+        //cmds.add(new TroubleCodesCommand()); // 03
+        cmds.add(new VinCommand()); // 09 02
 
         // Engine
-        cmds.add(new LoadCommand());
-        cmds.add(new RPMCommand());
-        cmds.add(new RuntimeCommand());
+        cmds.add(new LoadCommand()); // 01 04
+        cmds.add(new RPMCommand()); // 01 0C
+        cmds.add(new RuntimeCommand()); //01 1F
         cmds.add(new MassAirFlowCommand());
         cmds.add(new ThrottlePositionCommand());
 

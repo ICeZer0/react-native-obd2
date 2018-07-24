@@ -243,7 +243,9 @@ public class OBD2Handler implements ObdProgressListener {
   public void stateUpdate(ObdCommandJob job) {
     final String cmdName = job.getCommand().getName();
     String cmdResult = "";
-    final String cmdID = LookUpCommand(cmdName);
+    //final String cmdID = LookUpCommand(cmdName);
+    //final String cmdID = job.getCommand().getCommandPID();
+    final String cmdID = job.getCommand().getCommandId();
 
     if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
       cmdResult = job.getCommand().getResult();

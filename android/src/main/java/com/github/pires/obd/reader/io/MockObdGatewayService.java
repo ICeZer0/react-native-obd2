@@ -67,6 +67,7 @@ public class MockObdGatewayService extends AbstractGatewayService {
         while (!Thread.currentThread().isInterrupted()) {
             ObdCommandJob job = null;
             try {
+                Thread.sleep(200);
                 job = jobsQueue.take();
 
                 Log.d(TAG, "Taking job[" + job.getId() + "] from queue..");

@@ -29,19 +29,19 @@ class react_obd2 {
   startLiveSelect(aDeviceAddress) {
     jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
     jetbridge_obd2.startLiveVIN();
-    console.log('JS - startLiveSelect');
+    //console.log('JS - startLiveSelect');
   }
 
   startLiveData(aDeviceAddress) {
     jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
     jetbridge_obd2.startLiveData();
-    console.log('JS - startLiveData');
+    //console.log('JS - startLiveData');
   }
 
   startLivePids(aDeviceAddress) {
     jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
     jetbridge_obd2.startLivePids();
-    console.log('JS - startLivePids');
+    //console.log('JS - startLivePids');
   }
 
   stopLiveData() {
