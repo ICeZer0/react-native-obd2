@@ -64,7 +64,7 @@ public final class ObdConfig {
         // 128 PIDS + VIN
         cmds.add(new VinCommand()); // 09 02
         for(int i = 0; i < 128; i++) {
-            String pid = "01 " + Integer.toHexString(i);
+            String pid = "01 " + ((i > 15) ? Integer.toHexString(i) : "0" + Integer.toHexString(i));
             cmds.add(new CustomObdCommand(pid));
         }
 
@@ -74,37 +74,40 @@ public final class ObdConfig {
     public static ArrayList<ObdCommand> getCommands() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
+        // Misc
+        cmds.add(new SpeedCommand());
+        cmds.add(new RPMCommand()); // 01 0C
 
         // Control
         cmds.add(new ModuleVoltageCommand()); // 01 42
-        cmds.add(new EquivalentRatioCommand()); //01 44
+        //cmds.add(new EquivalentRatioCommand()); //01 44
         cmds.add(new DistanceMILOnCommand()); //01 21
-        cmds.add(new DtcNumberCommand()); // 01 01
+        //cmds.add(new DtcNumberCommand()); // 01 01
         cmds.add(new TimingAdvanceCommand()); // 01 0E
         //cmds.add(new TroubleCodesCommand()); // 03
         cmds.add(new VinCommand()); // 09 02
 
         // Engine
         cmds.add(new LoadCommand()); // 01 04
-        cmds.add(new RPMCommand()); // 01 0C
-        cmds.add(new RuntimeCommand()); //01 1F
-        cmds.add(new MassAirFlowCommand());
-        cmds.add(new ThrottlePositionCommand());
+        
+        //cmds.add(new RuntimeCommand()); //01 1F
+        cmds.add(new MassAirFlowCommand()); // 01 10
+        cmds.add(new ThrottlePositionCommand()); // 01 11
 
         // Fuel
-        cmds.add(new FindFuelTypeCommand());
-        cmds.add(new ConsumptionRateCommand());
-        // cmds.add(new AverageFuelEconomyObdCommand());
+        cmds.add(new FindFuelTypeCommand()); //01 51
+        cmds.add(new ConsumptionRateCommand()); // 01 5E
+        //cmds.add(new AverageFuelEconomyObdCommand());
         //cmds.add(new FuelEconomyCommand());
-        cmds.add(new FuelLevelCommand());
+        cmds.add(new FuelLevelCommand()); // 01 2F
         // cmds.add(new FuelEconomyMAPObdCommand());
         // cmds.add(new FuelEconomyCommandedMAPObdCommand());
-        cmds.add(new FuelTrimCommand(FuelTrim.LONG_TERM_BANK_1));
-        cmds.add(new FuelTrimCommand(FuelTrim.LONG_TERM_BANK_2));
-        cmds.add(new FuelTrimCommand(FuelTrim.SHORT_TERM_BANK_1));
-        cmds.add(new FuelTrimCommand(FuelTrim.SHORT_TERM_BANK_2));
-        cmds.add(new AirFuelRatioCommand());
-        cmds.add(new WidebandAirFuelRatioCommand());
+        // cmds.add(new FuelTrimCommand(FuelTrim.LONG_TERM_BANK_1));
+        // cmds.add(new FuelTrimCommand(FuelTrim.LONG_TERM_BANK_2));
+        // cmds.add(new FuelTrimCommand(FuelTrim.SHORT_TERM_BANK_1));
+        // cmds.add(new FuelTrimCommand(FuelTrim.SHORT_TERM_BANK_2));
+        // cmds.add(new AirFuelRatioCommand());
+        //cmds.add(new WidebandAirFuelRatioCommand());
         cmds.add(new OilTempCommand());
 
         // Pressure
@@ -118,8 +121,6 @@ public final class ObdConfig {
         cmds.add(new AmbientAirTemperatureCommand());
         cmds.add(new EngineCoolantTemperatureCommand());
 
-        // Misc
-        cmds.add(new SpeedCommand());
 
 
         return cmds;
