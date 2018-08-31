@@ -62,11 +62,21 @@ public final class ObdConfig {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
         // 128 PIDS + VIN
+        // cmds.add(new VinCommand()); // 09 02
+        // for(int i = 0; i < 128; i++) {
+        //     String pid = "01 " + ((i > 15) ? Integer.toHexString(i) : "0" + Integer.toHexString(i));
+        //     cmds.add(new CustomObdCommand(pid));
+        // }
+
+        // 128 PIDS + VIN
         cmds.add(new VinCommand()); // 09 02
-        for(int i = 0; i < 128; i++) {
-            String pid = "01 " + ((i > 15) ? Integer.toHexString(i) : "0" + Integer.toHexString(i));
-            cmds.add(new CustomObdCommand(pid));
-        }
+        cmds.add(new CustomObdCommand("01 00"));
+        cmds.add(new CustomObdCommand("01 20"));
+        cmds.add(new CustomObdCommand("01 40"));
+        cmds.add(new CustomObdCommand("01 60"));
+        cmds.add(new CustomObdCommand("01 80"));
+        cmds.add(new CustomObdCommand("01 A0"));
+        cmds.add(new CustomObdCommand("01 C0"));
 
         return cmds;
     }
