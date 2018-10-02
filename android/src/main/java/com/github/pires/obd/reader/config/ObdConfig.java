@@ -46,6 +46,9 @@ public final class ObdConfig {
         else if(config == 1) {
             return getCommands();
         }
+        else if(config == 3) {
+            return getDTC();
+        }
         return getPids();
     }
 
@@ -77,6 +80,15 @@ public final class ObdConfig {
         cmds.add(new CustomObdCommand("01 80"));
         cmds.add(new CustomObdCommand("01 A0"));
         cmds.add(new CustomObdCommand("01 C0"));
+
+        return cmds;
+    }
+
+    public static ArrayList<ObdCommand> getDTC() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        cmds.add(new VinCommand()); // 09 02
+        cmds.add(new CustomObdCommand("03 00"));
 
         return cmds;
     }

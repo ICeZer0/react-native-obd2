@@ -44,6 +44,12 @@ class react_obd2 {
     //console.log('JS - startLivePids');
   }
 
+  startLiveDTC(aDeviceAddress) {
+    jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
+    jetbridge_obd2.startLiveDTC();
+    //console.log('JS - startLiveDTC');
+  }
+
   stopLiveData() {
     return jetbridge_obd2.stopLiveData();
   }
