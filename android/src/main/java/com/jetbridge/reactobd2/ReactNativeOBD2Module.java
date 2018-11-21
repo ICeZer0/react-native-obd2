@@ -157,6 +157,16 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
         Log.e(TAG, "startLiveDTC 3");
     }
 
+    @ReactMethod
+    public void startLiveRPMAndVelocity() {
+        if (mOBD2Handler == null) {
+            mOBD2Handler = new OBD2Handler(mReactContext);
+        }
+        mOBD2Handler.setConfig(4);
+        mOBD2Handler.startLiveData();
+        Log.e(TAG, "startLiveRPMAndVelocity 3");
+    }
+
   @ReactMethod
   public void stopLiveData() {
     if (mOBD2Handler == null) {
