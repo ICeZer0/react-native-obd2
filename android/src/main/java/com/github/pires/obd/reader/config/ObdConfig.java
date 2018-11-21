@@ -49,6 +49,9 @@ public final class ObdConfig {
         else if(config == 3) {
             return getDTC();
         }
+        else if(config == 4) {
+            return getRPMAndVelocity();
+        }
         return getPids();
     }
 
@@ -87,8 +90,20 @@ public final class ObdConfig {
     public static ArrayList<ObdCommand> getDTC() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
-        cmds.add(new VinCommand()); // 09 02
-        cmds.add(new CustomObdCommand("03 00"));
+        //cmds.add(new VinCommand()); // 09 02
+        // cmds.add(new CustomObdCommand("03 00"));
+        cmds.add(new CustomObdCommand("03"));
+        // cmds.add(new CustomObdCommand("03 01"));
+        cmds.add(new DtcNumberCommand());
+
+        return cmds;
+    }
+
+    public static ArrayList<ObdCommand> getRPMAndVelocity() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        cmds.add(new SpeedCommand());
+        cmds.add(new RPMCommand());
 
         return cmds;
     }
@@ -142,8 +157,6 @@ public final class ObdConfig {
         cmds.add(new AirIntakeTemperatureCommand());
         cmds.add(new AmbientAirTemperatureCommand());
         cmds.add(new EngineCoolantTemperatureCommand());
-
-
 
         return cmds;
     }
