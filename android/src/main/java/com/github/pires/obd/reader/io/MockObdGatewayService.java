@@ -75,8 +75,16 @@ public class MockObdGatewayService extends AbstractGatewayService {
                 if (job.getState().equals(ObdCommandJobState.NEW)) {
                     Log.d(TAG, "Job state is NEW. Run it..");
                     job.setState(ObdCommandJobState.RUNNING);
-                    Log.d(TAG, job.getCommand().getName());
-                    job.getCommand().run(new ByteArrayInputStream("41 00 00 00>41 00 00 00>41 00 00 00>".getBytes()), new ByteArrayOutputStream());
+                    Log.d(TAG, job.getCommand().getName() + ": " + job.getCommand().getCommandId() + ":" + job.getCommand().getCommandMode());
+                    if(job.getCommand().getCommandId().equals("01 01")) {
+                        job.getCommand().run(new ByteArrayInputStream("41 01 82 07 65 04>".getBytes()), new ByteArrayOutputStream());
+                    }
+                    else if(job.getCommand().getCommandId().equals("03")) {
+                        job.getCommand().run(new ByteArrayInputStream("43 01 03 27 51 21 70 43 00 41 00 00 00 00>".getBytes()), new ByteArrayOutputStream());
+                    }
+                    else {
+                        job.getCommand().run(new ByteArrayInputStream("41 00 00 00>41 00 00 00>41 00 00 00>".getBytes()), new ByteArrayOutputStream());
+                    }
                 } else {
                     Log.e(TAG, "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
                 }

@@ -16,7 +16,6 @@ public class CustomObdCommand extends ObdCommand{
 
     }
 
-
     @Override
     public String getFormattedResult() {
         return this.rawData;

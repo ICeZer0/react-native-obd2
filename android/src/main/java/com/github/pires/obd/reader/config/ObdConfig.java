@@ -1,10 +1,11 @@
 package com.github.pires.obd.reader.config;
 
 import com.github.pires.obd.commands.CustomObdCommand;
+import com.github.pires.obd.commands.DtcErrorsCommand;
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.control.DistanceMILOnCommand;
-import com.github.pires.obd.commands.control.DtcNumberCommand;
+import com.github.pires.obd.commands.DtcNumberCommand;
 import com.github.pires.obd.commands.control.EquivalentRatioCommand;
 import com.github.pires.obd.commands.control.ModuleVoltageCommand;
 import com.github.pires.obd.commands.control.TimingAdvanceCommand;
@@ -52,6 +53,9 @@ public final class ObdConfig {
         else if(config == 4) {
             return getRPMAndVelocity();
         }
+        else if(config == 5) {
+            return deleteDTC();
+        }
         return getPids();
     }
 
@@ -92,9 +96,19 @@ public final class ObdConfig {
 
         //cmds.add(new VinCommand()); // 09 02
         // cmds.add(new CustomObdCommand("03 00"));
-        cmds.add(new CustomObdCommand("03"));
+        //cmds.add(new CustomObdCommand("03"));
         // cmds.add(new CustomObdCommand("03 01"));
         cmds.add(new DtcNumberCommand());
+        cmds.add(new DtcErrorsCommand());
+
+        return cmds;
+    }
+
+    public static ArrayList<ObdCommand> deleteDTC() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        // Only VIN
+        cmds.add(new CustomObdCommand("04"));
 
         return cmds;
     }

@@ -1,4 +1,5 @@
 *.iml
+.DS_Store
 build/
 example/node_modules/
 example/android/build/

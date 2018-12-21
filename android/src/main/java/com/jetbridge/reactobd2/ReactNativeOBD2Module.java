@@ -158,6 +158,16 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void deleteLiveDTC() {
+        if (mOBD2Handler == null) {
+            mOBD2Handler = new OBD2Handler(mReactContext);
+        }
+        mOBD2Handler.setConfig(5);
+        mOBD2Handler.startLiveData();
+        Log.e(TAG, "deleteLiveDTC 5");
+    }
+
+    @ReactMethod
     public void startLiveRPMAndVelocity() {
         if (mOBD2Handler == null) {
             mOBD2Handler = new OBD2Handler(mReactContext);

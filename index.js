@@ -50,6 +50,12 @@ class react_obd2 {
     //console.log('JS - startLiveDTC');
   }
 
+  deleteLiveDTC(aDeviceAddress) {
+    jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
+    jetbridge_obd2.deleteLiveDTC();
+    //console.log('JS - deleteLiveDTC');
+  }
+
   startLiveRPMAndVelocity(aDeviceAddress) {
     jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
     jetbridge_obd2.startLiveRPMAndVelocity();
