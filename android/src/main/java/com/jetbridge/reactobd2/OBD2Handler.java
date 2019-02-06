@@ -285,4 +285,9 @@ public class OBD2Handler implements ObdProgressListener {
     btMap.putString("status", status);
     sendEvent(eventName, btMap);
   }
+
+  public boolean isBTEnabled() {
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    return (btAdapter != null && btAdapter.isEnabled());
+  }
 }

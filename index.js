@@ -65,6 +65,10 @@ class react_obd2 {
   stopLiveData() {
     return jetbridge_obd2.stopLiveData();
   }
+
+  isBTEnabled() {
+    return jetbridge_obd2.isBTEnabled();
+  }
 }
 
 module.exports = new react_obd2();

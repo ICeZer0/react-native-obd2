@@ -64,7 +64,6 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
     return "JetBridge_OBDII";
   }
 
-
   @ReactMethod
   public void ready() {
     if (mOBD2Handler == null) {
@@ -110,7 +109,7 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setRemoteDeviceAddress(String remoteDeviceAddress) {
-     if (mOBD2Handler == null) {
+    if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
     }
     Log.e(TAG, "setRemoteDeviceAddress " + remoteDeviceAddress);
@@ -137,52 +136,60 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
     Log.e(TAG, "startLivePids 2");
   }
 
-    @ReactMethod
-    public void startLiveVIN() {
-        if (mOBD2Handler == null) {
-            mOBD2Handler = new OBD2Handler(mReactContext);
-        }
-        mOBD2Handler.setConfig(0);
-        mOBD2Handler.startLiveData();
-        Log.e(TAG, "startLiveVIN 0");
+  @ReactMethod
+  public void startLiveVIN() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
     }
+    mOBD2Handler.setConfig(0);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLiveVIN 0");
+  }
 
-    @ReactMethod
-    public void startLiveDTC() {
-        if (mOBD2Handler == null) {
-            mOBD2Handler = new OBD2Handler(mReactContext);
-        }
-        mOBD2Handler.setConfig(3);
-        mOBD2Handler.startLiveData();
-        Log.e(TAG, "startLiveDTC 3");
+  @ReactMethod
+  public void startLiveDTC() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
     }
+    mOBD2Handler.setConfig(3);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLiveDTC 3");
+  }
 
-    @ReactMethod
-    public void deleteLiveDTC() {
-        if (mOBD2Handler == null) {
-            mOBD2Handler = new OBD2Handler(mReactContext);
-        }
-        mOBD2Handler.setConfig(5);
-        mOBD2Handler.startLiveData();
-        Log.e(TAG, "deleteLiveDTC 5");
+  @ReactMethod
+  public void deleteLiveDTC() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
     }
+    mOBD2Handler.setConfig(5);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "deleteLiveDTC 5");
+  }
 
-    @ReactMethod
-    public void startLiveRPMAndVelocity() {
-        if (mOBD2Handler == null) {
-            mOBD2Handler = new OBD2Handler(mReactContext);
-        }
-        mOBD2Handler.setConfig(4);
-        mOBD2Handler.startLiveData();
-        Log.e(TAG, "startLiveRPMAndVelocity 3");
+  @ReactMethod
+  public void startLiveRPMAndVelocity() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
     }
+    mOBD2Handler.setConfig(4);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLiveRPMAndVelocity 3");
+  }
 
   @ReactMethod
   public void stopLiveData() {
     if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
     }
-
     mOBD2Handler.stopLiveData();
+  }
+
+  @ReactMethod
+  public void isBTEnabled(Promise p) {
+    Log.e(TAG, ">>>>> Is BT Enabled");
+      if (mOBD2Handler == null) {
+          mOBD2Handler = new OBD2Handler(mReactContext);
+      }
+    p.resolve(mOBD2Handler.isBTEnabled());
   }
 }
