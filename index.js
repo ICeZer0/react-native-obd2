@@ -69,6 +69,10 @@ class react_obd2 {
   isBTEnabled() {
     return jetbridge_obd2.isBTEnabled();
   }
+
+  enableBluetooth() {
+    return jetbridge_obd2.enableBluetooth();
+  }
 }
 
 module.exports = new react_obd2();

@@ -181,15 +181,25 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
     if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
     }
+
     mOBD2Handler.stopLiveData();
   }
 
   @ReactMethod
   public void isBTEnabled(Promise p) {
     Log.e(TAG, ">>>>> Is BT Enabled");
-      if (mOBD2Handler == null) {
-          mOBD2Handler = new OBD2Handler(mReactContext);
-      }
+    if (mOBD2Handler == null) {
+        mOBD2Handler = new OBD2Handler(mReactContext);
+    }
     p.resolve(mOBD2Handler.isBTEnabled());
+  }
+
+  @ReactMethod
+  public void enableBluetooth(Promise promise) {
+    Log.e(TAG, ">>> Enable BT");
+    if(mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
+    }
+    mOBD2Handler.enableBluetooth(promise);
   }
 }

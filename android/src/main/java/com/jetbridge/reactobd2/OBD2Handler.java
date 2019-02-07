@@ -25,6 +25,7 @@
 
 package com.jetbridge.reactobd2;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
@@ -36,7 +37,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -54,12 +57,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class OBD2Handler implements ObdProgressListener {
+import static android.app.Activity.RESULT_OK;
+
+public class OBD2Handler implements ObdProgressListener, ActivityEventListener {
   private static final String TAG = "OBD2Handler";
 
   private static final String EVENTNAME_OBD2_DATA = "obd2LiveData";
   private static final String EVENTNAME_BT_STATUS = "obd2BluetoothStatus";
   private static final String EVENTNAME_OBD_STATUS = "obd2Status";
+  private static final int ENABLE_REQUEST = 1001;
 
   private ReactContext mReactContext = null;
   private ObdProgressListener mObdProgressListener = null;
@@ -72,6 +78,8 @@ public class OBD2Handler implements ObdProgressListener {
 
   private boolean mIsServiceBound;
   private AbstractGatewayService service;
+
+  private Promise mEnableBluetoothPromise;
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
       if (service != null && service.isRunning() && service.queueEmpty()) {
@@ -121,6 +129,7 @@ public class OBD2Handler implements ObdProgressListener {
   OBD2Handler(ReactContext aContext) {
     mReactContext = aContext;
     mObdProgressListener = this;
+    mReactContext.addActivityEventListener(this);
   }
 
   public void ready() {
@@ -289,5 +298,42 @@ public class OBD2Handler implements ObdProgressListener {
   public boolean isBTEnabled() {
     final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
     return (btAdapter != null && btAdapter.isEnabled());
+  }
+
+  public void enableBluetooth(Promise promise) {
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (btAdapter == null) {
+      Log.d(TAG, "No bluetooth support");
+      promise.reject("", "No bluetooth support");
+      return;
+    }
+    if (!btAdapter.isEnabled()) {
+      mEnableBluetoothPromise = promise;
+      Intent intentEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+      
+      if (mReactContext.getCurrentActivity() == null)
+        promise.reject("", "Current activity not available");
+      else
+        mReactContext.getCurrentActivity().startActivityForResult(intentEnable, ENABLE_REQUEST);
+    } else
+      promise.resolve(true);
+  }
+
+  @Override
+  public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+    Log.d(TAG, "onActivityResult");
+    if (requestCode == ENABLE_REQUEST && mEnableBluetoothPromise != null) {
+      if (resultCode == RESULT_OK) {
+        mEnableBluetoothPromise.resolve(true);
+      } else {
+        mEnableBluetoothPromise.reject("3001","User refused to enable");
+      }
+      mEnableBluetoothPromise = null;
+    }
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+
   }
 }
