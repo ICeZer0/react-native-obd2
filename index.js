@@ -62,6 +62,12 @@ class react_obd2 {
     //console.log('JS - startLiveRPMAndVelocity');
   }
 
+  startLiveDiagnosis(aDeviceAddress) {
+    jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
+    jetbridge_obd2.startLiveDiagnosis();
+    console.log('JS - startLiveDiagnosis');
+  }
+  
   stopLiveData() {
     return jetbridge_obd2.stopLiveData();
   }

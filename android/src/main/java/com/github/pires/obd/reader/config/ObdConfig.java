@@ -56,6 +56,9 @@ public final class ObdConfig {
         else if(config == 5) {
             return deleteDTC();
         }
+        else if(config == 6) {
+            return getDiagnosis();
+        }
         return getPids();
     }
 
@@ -113,6 +116,36 @@ public final class ObdConfig {
         return cmds;
     }
 
+    public static ArrayList<ObdCommand> getDiagnosis() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        cmds.add(new VinCommand()); // 09 02
+        cmds.add(new DtcNumberCommand());
+        cmds.add(new DtcErrorsCommand());
+        cmds.add(new SpeedCommand());
+        cmds.add(new RPMCommand()); // 01 0C
+        cmds.add(new ModuleVoltageCommand()); // 01 42
+        cmds.add(new DistanceMILOnCommand()); //01 21
+        cmds.add(new TimingAdvanceCommand()); // 01 0E
+        cmds.add(new VinCommand()); // 09 02
+        cmds.add(new LoadCommand()); // 01 04
+        cmds.add(new MassAirFlowCommand()); // 01 10
+        cmds.add(new ThrottlePositionCommand()); // 01 11
+        cmds.add(new FindFuelTypeCommand()); //01 51
+        cmds.add(new ConsumptionRateCommand()); // 01 5E
+        cmds.add(new FuelLevelCommand()); // 01 2F
+        cmds.add(new OilTempCommand());
+        cmds.add(new BarometricPressureCommand());
+        cmds.add(new FuelPressureCommand());
+        cmds.add(new FuelRailPressureCommand());
+        cmds.add(new IntakeManifoldPressureCommand());
+        cmds.add(new AirIntakeTemperatureCommand());
+        cmds.add(new AmbientAirTemperatureCommand());
+        cmds.add(new EngineCoolantTemperatureCommand());
+
+        return cmds;
+    }
+
     public static ArrayList<ObdCommand> getRPMAndVelocity() {
         ArrayList<ObdCommand> cmds = new ArrayList<>();
 
@@ -140,7 +173,7 @@ public final class ObdConfig {
 
         // Engine
         cmds.add(new LoadCommand()); // 01 04
-        
+
         //cmds.add(new RuntimeCommand()); //01 1F
         cmds.add(new MassAirFlowCommand()); // 01 10
         cmds.add(new ThrottlePositionCommand()); // 01 11
