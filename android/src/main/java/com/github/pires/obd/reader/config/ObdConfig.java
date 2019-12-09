@@ -3,6 +3,7 @@ package com.github.pires.obd.reader.config;
 import com.github.pires.obd.commands.CustomObdCommand;
 import com.github.pires.obd.commands.DtcErrorsCommand;
 import com.github.pires.obd.commands.ObdCommand;
+import com.github.pires.obd.commands.ObdMultiCommand;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.control.DistanceMILOnCommand;
 import com.github.pires.obd.commands.DtcNumberCommand;
@@ -59,6 +60,9 @@ public final class ObdConfig {
         else if(config == 6) {
             return getDiagnosis();
         }
+        else if(config == 7) {
+            return getVINAndSensors();
+        }
         return getPids();
     }
 
@@ -67,6 +71,19 @@ public final class ObdConfig {
 
         // Only VIN
         cmds.add(new VinCommand());
+
+        return cmds;
+    }
+
+    public static ArrayList<ObdCommand> getVINAndSensors() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
+
+        // Only VIN
+        cmds.add(new VinCommand());
+        cmds.add(new FuelLevelCommand());
+        cmds.add(new EngineCoolantTemperatureCommand());
+        cmds.add(new OilTempCommand());
+        cmds.add(new LoadCommand());
 
         return cmds;
     }
@@ -151,6 +168,11 @@ public final class ObdConfig {
 
         cmds.add(new SpeedCommand());
         cmds.add(new RPMCommand());
+        cmds.add(new VinCommand());
+        cmds.add(new FuelLevelCommand());
+        cmds.add(new EngineCoolantTemperatureCommand());
+        cmds.add(new OilTempCommand());
+        cmds.add(new LoadCommand());
 
         return cmds;
     }

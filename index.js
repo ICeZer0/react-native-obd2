@@ -32,6 +32,12 @@ class react_obd2 {
     //console.log('JS - startLiveSelect');
   }
 
+  startLiveVINAndSensors(aDeviceAddress) {
+    jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
+    jetbridge_obd2.startLiveVINAndSensors();
+    console.log('JS - startLiveVINAndSensors');
+  }
+
   startLiveData(aDeviceAddress) {
     jetbridge_obd2.setRemoteDeviceAddress(aDeviceAddress);
     jetbridge_obd2.startLiveData();

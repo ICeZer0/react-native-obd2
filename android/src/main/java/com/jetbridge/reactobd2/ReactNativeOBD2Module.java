@@ -147,6 +147,16 @@ public class ReactNativeOBD2Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void startLiveVINAndSensors() {
+    if (mOBD2Handler == null) {
+      mOBD2Handler = new OBD2Handler(mReactContext);
+    }
+    mOBD2Handler.setConfig(7);
+    mOBD2Handler.startLiveData();
+    Log.e(TAG, "startLiveVINAndSensor 7");
+  }
+
+  @ReactMethod
   public void startLiveDTC() {
     if (mOBD2Handler == null) {
       mOBD2Handler = new OBD2Handler(mReactContext);
